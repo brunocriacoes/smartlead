@@ -6,11 +6,20 @@ class BaseRemote
     private $user = 'seu_usuario';
     private $password = 'sua_senha';
     private $dbname = 'seu_banco';
+    private $port = '3306';
     private $conn;
 
     public function __construct()
     {
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
+        $opcoes = get_option('meu_plugin_opcoes');
+        $this->host = esc_attr($opcoes['host']);
+        $this->dbname = esc_attr($opcoes['nome_db'] ?? '');
+        $this->user = esc_attr($opcoes['usuario'] ?? '');
+        $this->password = esc_attr($opcoes['senha'] ?? '');
+        $this->port = esc_attr($opcoes['porta'] ?? '');
+
+        $dsn = 'mysql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $this->dbname;
+        echo $dsn;
         $options = array(
             PDO::ATTR_PERSISTENT => true,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION

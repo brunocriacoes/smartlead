@@ -1,6 +1,6 @@
 <?php
 
-class BaseRemote
+class ApiRemote
 {
     private $db;
 

@@ -34,7 +34,7 @@ services:
       - 8081:80
     environment:
       PMA_HOST: db
-      PMA_USER: wordpress
-      PMA_PASSWORD: password
+      PMA_USER: root
+      PMA_PASSWORD: "1LQRGOXZPD1so4GLuADWkjP+BVumvqXr"
     depends_on:
       - db
