@@ -15,8 +15,14 @@ class ApiRemote
 
     public function getAllProducts()
     {
-        $query = "SELECT * FROM products";
-        return $this->db->select($query);
+        $query = "SELECT id, name, cod, specifications, internal_part, external_part FROM products WHERE deleted_at IS NULL";
+        $produtos = $this->db->select($query);
+        foreach ($produtos as &$produto) {
+            $query = "SELECT id, path FROM product_photos WHERE product_id = ?";
+            $photos = $this->db->select($query, array($produto['id']));
+            $produto['photos'] = $photos;
+        }
+        return $produtos;
     }
 
     public function getProductsByCategory($categoryId)
@@ -27,10 +33,10 @@ class ApiRemote
 
     public function getAllCategoriesAndSubcategories()
     {
-        $query = "SELECT * FROM categories";
+        $query = "SELECT id, name FROM categories WHERE deleted_at IS NULL" ;
         $categories = $this->db->select($query);
         foreach ($categories as &$category) {
-            $query = "SELECT * FROM sub_categories WHERE category_id = ?";
+            $query = "SELECT id, name FROM sub_categories WHERE category_id = ? AND deleted_at IS NULL";
             $subcategories = $this->db->select($query, array($category['id']));
             $category['subcategories'] = $subcategories;
         }

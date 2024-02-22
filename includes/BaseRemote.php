@@ -19,7 +19,8 @@ class BaseRemote
         $this->port = esc_attr($opcoes['porta'] ?? '');
 
         $dsn = 'mysql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $this->dbname;
-        echo $dsn;
+        
+
         $options = array(
             PDO::ATTR_PERSISTENT => true,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
