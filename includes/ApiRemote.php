@@ -35,11 +35,33 @@ class ApiRemote
             $produto['photos'] = $photos;
         }
         return $produtos;
-    }   
+    }
+
+    public function getCategoryByProductId($productId)
+    {
+        $query = "SELECT sc.name, sc.id
+        FROM sub_categories sc
+        JOIN product_sub_category psc ON sc.id = psc.sub_category_id
+        WHERE psc.product_id = ?";
+        $categories = $this->db->select($query, array($productId));
+        return $categories;
+    }
+    
+    public function getProductsRelated($ids)
+    {
+        $prods = [];
+        foreach($ids as $id){
+            $ps = $this->getProductsByCategory($id);
+            $prods = array_merge($prods, $ps);
+        }
+        return array_slice($prods, 0, 10);
+        
+    }
+    
 
     public function getProductsById($id)
     {
-        $query = "SELECT id, name, cod, specifications, internal_part, external_part, description FROM products WHERE id = ?";
+        $query = "SELECT id, name, cod, specifications, internal_part, external_part, recordings, description FROM products WHERE id = ?";
         $produtos = $this->db->select($query, array($id));
         foreach ($produtos as &$produto) {
             $query = "SELECT id, path FROM product_photos WHERE product_id = ?";

@@ -1,0 +1,1 @@
+GET http://localhost:8080/wp-json/smartlead-api/v1/produto/?produto_id=34
