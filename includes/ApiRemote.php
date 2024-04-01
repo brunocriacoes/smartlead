@@ -46,18 +46,17 @@ class ApiRemote
         $categories = $this->db->select($query, array($productId));
         return $categories;
     }
-    
+
     public function getProductsRelated($ids)
     {
         $prods = [];
-        foreach($ids as $id){
+        foreach ($ids as $id) {
             $ps = $this->getProductsByCategory($id);
             $prods = array_merge($prods, $ps);
         }
         return array_slice($prods, 0, 10);
-        
     }
-    
+
 
     public function getProductsById($id)
     {
@@ -69,12 +68,12 @@ class ApiRemote
             $produto['photos'] = $photos;
         }
         return $produtos;
-    }   
+    }
 
 
     public function getAllCategoriesAndSubcategories()
     {
-        $query = "SELECT id, name FROM categories WHERE deleted_at IS NULL" ;
+        $query = "SELECT id, name FROM categories WHERE deleted_at IS NULL";
         $categories = $this->db->select($query);
         foreach ($categories as &$category) {
             $query = "SELECT id, name FROM sub_categories WHERE category_id = ? AND deleted_at IS NULL";
@@ -82,5 +81,46 @@ class ApiRemote
             $category['subcategories'] = $subcategories;
         }
         return $categories;
+    }
+    public function insertOrcamento($name, $company, $phone, $email, $observations)
+    {
+        $query = "INSERT INTO budgets (
+            client_name,
+            client_company,
+            client_phone,
+            client_email,
+            user_id,
+            status,
+            observations
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ? )";
+
+        return $this->db->insert($query, array(
+            $name,
+            $company,
+            $phone,
+            $email,
+            '2',
+            'pending',
+            $observations
+        ));
+    }
+
+    public function insertItenOrcamento($quantity, $product_id, $budget_id)
+    {
+        $query = "INSERT INTO budget_product (
+            quantity,
+            product_id,
+            budget_id,
+            price
+        )
+        VALUES (?, ?, ?, ?)";
+
+        return $this->db->insert($query, array(
+            $quantity,
+            $product_id,
+            $budget_id,
+            '1'
+        ));
     }
 }
