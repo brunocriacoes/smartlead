@@ -19,6 +19,7 @@ class BaseRemote
         $this->port = esc_attr($opcoes['porta'] ?? '');
 
         $dsn = 'mysql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $this->dbname;
+        echo $dsn;
         
 
         $options = array(
