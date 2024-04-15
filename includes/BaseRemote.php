@@ -11,9 +11,6 @@ class BaseRemote
 
     public function __construct()
     {
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
-
         $opcoes = get_option('meu_plugin_opcoes');
         $this->host = esc_attr($opcoes['host']);
         $this->dbname = esc_attr($opcoes['nome_db'] ?? '');
