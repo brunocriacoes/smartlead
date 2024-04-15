@@ -73,10 +73,10 @@ class ApiRemote
 
     public function getAllCategoriesAndSubcategories()
     {
-        $query = "SELECT id, name FROM categories WHERE deleted_at IS NULL";
+        $query = "SELECT id, name, slug FROM categories WHERE deleted_at IS NULL";
         $categories = $this->db->select($query);
         foreach ($categories as &$category) {
-            $query = "SELECT id, name FROM sub_categories WHERE category_id = ? AND deleted_at IS NULL";
+            $query = "SELECT id, name, slug FROM sub_categories WHERE category_id = ? AND deleted_at IS NULL";
             $subcategories = $this->db->select($query, array($category['id']));
             $category['subcategories'] = $subcategories;
         }
