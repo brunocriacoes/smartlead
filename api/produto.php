@@ -11,7 +11,7 @@ function custom_api_produto()
             'produto_id' => array(
                 'required' => true,
                 'validate_callback' => function ($param, $request, $key) {
-                    return is_numeric($param);
+                    return is_string($param);
                 }
             ),
         ),
