@@ -11,6 +11,9 @@ class BaseRemote
 
     public function __construct()
     {
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+
         $opcoes = get_option('meu_plugin_opcoes');
         $this->host = esc_attr($opcoes['host']);
         $this->dbname = esc_attr($opcoes['nome_db'] ?? '');
@@ -19,9 +22,6 @@ class BaseRemote
         $this->port = esc_attr($opcoes['porta'] ?? '');
 
         $dsn = 'mysql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $this->dbname . ';sslmode=REQUIRED';
-
-        // $DATABASE_CONNECTION = new PDO('pgsql:host='.$SERVER_HOST.';port='.$SERVER_PORT.';dbname='.$DB_NAME.';user='.$SERVER_USER.';password='.$SERVER_PASSWORD.';sslmode='.$SSLMODE);
-
 
         $options = array(
             PDO::ATTR_PERSISTENT => true,
