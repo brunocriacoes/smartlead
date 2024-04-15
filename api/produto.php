@@ -8,12 +8,12 @@ function custom_api_produto()
         'methods'  => 'GET',
         'callback' => 'custom_api_get_produto',
         'args' => array(
-            'produto_id' => array(
-                'required' => true,
-                'validate_callback' => function ($param, $request, $key) {
-                    return is_string($param);
-                }
-            ),
+            // 'produto_id' => array(
+            //     'required' => true,
+            //     'validate_callback' => function ($param, $request, $key) {
+            //         return is_string($param);
+            //     }
+            // ),
         ),
     ));
 }
