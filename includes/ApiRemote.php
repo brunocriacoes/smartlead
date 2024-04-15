@@ -60,7 +60,7 @@ class ApiRemote
 
     public function getProductsById($id)
     {
-        $query = "SELECT id, name, slug, cod, specifications, internal_part, external_part, recordings, description FROM products WHERE id = ?";
+        $query = "SELECT id, name, cod, specifications, internal_part, external_part, recordings, description FROM products WHERE id = ?";
         $produtos = $this->db->select($query, array($id));
         foreach ($produtos as &$produto) {
             $query = "SELECT id, path FROM product_photos WHERE product_id = ?";
