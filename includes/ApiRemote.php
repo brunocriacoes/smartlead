@@ -25,12 +25,12 @@ class ApiRemote
         return $produtos;
     }
 
-    public function getIdCategoryBySlug($slug)
-    {
-        $query = "SELECT id FROM categories WHERE slug = ?";
-        $categoria = $this->db->select($query, array($slug));
-        return $categoria[0]['id'];
-    }
+    // public function getIdCategoryBySlug($slug)
+    // {
+    //     $query = "SELECT id FROM categories WHERE slug = ?";
+    //     $categoria = $this->db->select($query, array($slug));
+    //     return $categoria[0]['id'];
+    // }
 
     public function getProductsByCategory($categoryId)
     {
