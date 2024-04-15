@@ -35,14 +35,14 @@ class ApiRemote
     public function getProductsByCategory($categoryId)
     {
         // $id_category = $this->getIdCategoryBySlug($categoryId);
-        $query = "SELECT p.id id, p.name name, p.slug slug, p.cod cod, p.specifications specifications, p.internal_part internal_part, p.external_part external_part FROM products p INNER JOIN category_product cp ON p.id = cp.product_id WHERE cp.category_id = ?";
-        $produtos = $this->db->select($query, array($categoryId));
-        foreach ($produtos as &$produto) {
-            $query = "SELECT id, path FROM product_photos WHERE product_id = ?";
-            $photos = $this->db->select($query, array($produto['id']));
-            $produto['photos'] = $photos;
-        }
-        return $produtos;
+        // $query = "SELECT p.id id, p.name name, p.slug slug, p.cod cod, p.specifications specifications, p.internal_part internal_part, p.external_part external_part FROM products p INNER JOIN category_product cp ON p.id = cp.product_id WHERE cp.category_id = ?";
+        // $produtos = $this->db->select($query, array($categoryId));
+        // foreach ($produtos as &$produto) {
+        //     $query = "SELECT id, path FROM product_photos WHERE product_id = ?";
+        //     $photos = $this->db->select($query, array($produto['id']));
+        //     $produto['photos'] = $photos;
+        // }
+        return $produtos ?? [];
     }
 
     public function getCategoryByProductId($productId)
