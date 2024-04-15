@@ -17,9 +17,6 @@ class BaseRemote
         $this->user = esc_attr($opcoes['usuario'] ?? '');
         $this->password = esc_attr($opcoes['senha'] ?? '');
         $this->port = esc_attr($opcoes['porta'] ?? '');
-
-        $dsn = 'mysql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $this->dbname;
-        echo $dsn;
         
 
         $options = array(
