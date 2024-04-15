@@ -1,9 +1,11 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 function custom_api_produtos_categoria_id()
 {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
+
 
     register_rest_route('smartlead-api/v1', '/produtos-categoria-id', array(
         'methods'  => 'GET',
