@@ -34,6 +34,9 @@ class ApiRemote
 
     public function getProductsByCategory($categoryId)
     {
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+
         $id_category = $this->getIdCategoryBySlug($categoryId);
         die($id_category);
         $query = "SELECT p.id id, p.name name, p.slug slug, p.cod cod, p.specifications specifications, p.internal_part internal_part, p.external_part external_part FROM products p INNER JOIN category_product cp ON p.id = cp.product_id WHERE cp.category_id = ?";
