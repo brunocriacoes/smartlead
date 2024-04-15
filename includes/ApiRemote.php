@@ -15,7 +15,7 @@ class ApiRemote
 
     public function getAllProducts()
     {
-        $query = "SELECT id, name, cod, specifications, internal_part, external_part FROM products WHERE deleted_at IS NULL";
+        $query = "SELECT id, name, slug, cod, specifications, internal_part, external_part FROM products WHERE deleted_at IS NULL";
         $produtos = $this->db->select($query);
         foreach ($produtos as &$produto) {
             $query = "SELECT id, path FROM product_photos WHERE product_id = ?";
@@ -27,7 +27,7 @@ class ApiRemote
 
     public function getProductsByCategory($categoryId)
     {
-        $query = "SELECT p.id id, p.name name, p.cod cod, p.specifications specifications, p.internal_part internal_part, p.external_part external_part FROM products p INNER JOIN category_product cp ON p.id = cp.product_id WHERE cp.category_id = ?";
+        $query = "SELECT p.id id, p.name name, p.slug slug, p.cod cod, p.specifications specifications, p.internal_part internal_part, p.external_part external_part FROM products p INNER JOIN category_product cp ON p.id = cp.product_id WHERE cp.category_id = ?";
         $produtos = $this->db->select($query, array($categoryId));
         foreach ($produtos as &$produto) {
             $query = "SELECT id, path FROM product_photos WHERE product_id = ?";
@@ -39,7 +39,7 @@ class ApiRemote
 
     public function getCategoryByProductId($productId)
     {
-        $query = "SELECT sc.name, sc.id
+        $query = "SELECT sc.name, sc.id, sc.slug
         FROM sub_categories sc
         JOIN product_sub_category psc ON sc.id = psc.sub_category_id
         WHERE psc.product_id = ?";
