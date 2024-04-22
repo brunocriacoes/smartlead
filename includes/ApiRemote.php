@@ -125,6 +125,61 @@ class ApiRemote
 
     public function insertItenOrcamento($quantity, $product_id, $budget_id)
     {
+        $query_produto = "SELECT * FROM products WHERE id=?";
+        $select_produto = $this->db->select($query_produto, array($product_id));
+        $produto = $select_produto[0];
+        $sql_insert_produto = "INSERT INTO products (
+            name,
+            slug,
+            cod,
+            description,
+            specifications,
+            recordings,
+            included,
+            features,
+            internal_part,
+            external_part,
+            observations,
+            budget_id,
+            created_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $dados_produto = array(
+            $produto['name'],
+            $produto['slug'],
+            'unlisted',
+            $produto['description'],
+            $produto['specifications'],
+            $produto['recordings'],
+            $produto['included'],
+            $produto['features'],
+            $produto['internal_part'],
+            $produto['external_part'],
+            $produto['observations'],
+            $budget_id,
+            $produto['created_at'],
+        );
+
+        $insert_produtos = $this->db->insert($sql_insert_produto, $dados_produto);
+
+        $sql_insert_product_values = "INSERT INTO product_values (
+            quantity,
+            price,
+            product_id,
+        );
+        VALUES (?, ?, ?)";
+
+        $dados_product_values = array(
+            $quantity,
+            '100',
+            $insert_produtos,
+        );
+
+        $this->db->insert($sql_insert_product_values, $dados_product_values);
+
+
+
         $query = "INSERT INTO budget_product (
             quantity,
             product_id,
