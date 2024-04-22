@@ -190,7 +190,7 @@ class ApiRemote
 
         return $this->db->insert($query, array(
             $quantity,
-            $product_id,
+            $insert_produtos,
             $budget_id,
             '1'
         ));
