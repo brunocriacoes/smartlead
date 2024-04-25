@@ -108,9 +108,10 @@ class ApiRemote
             client_email,
             user_id,
             status,
-            observations
+            observations,
+            created_at
         )
-        VALUES (?, ?, ?, ?, ?, ?, ? )";
+        VALUES (?, ?, ?, ?, ?, ?, ?, ? )";
 
         return $this->db->insert($query, array(
             $name,
@@ -119,7 +120,8 @@ class ApiRemote
             $email,
             '2',
             'pending',
-            $observations
+            $observations,
+            date('Y-m-d H:i:s')
         ));
     }
 
