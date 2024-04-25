@@ -127,9 +127,17 @@ class ApiRemote
 
     public function insertItenOrcamento($quantity, $product_id, $budget_id)
     {
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+
+        $query_photo = "SELECT * FROM product_photos WHERE product_id=?";
+        $select_photo = $this->db->select($query_photo, array($product_id));
+        $photos = $select_photo;
+
         $query_produto = "SELECT * FROM products WHERE id=?";
         $select_produto = $this->db->select($query_produto, array($product_id));
         $produto = $select_produto[0];
+
         $sql_insert_produto = "INSERT INTO products (
             name,
             slug,
@@ -159,27 +167,48 @@ class ApiRemote
             $produto['internal_part'],
             $produto['external_part'],
             $produto['observations'],
-            $budget_id,
+            (int)$budget_id,
             $produto['created_at'],
         );
 
+
         $insert_produtos = $this->db->insert($sql_insert_produto, $dados_produto);
+
+        foreach ($photos as $p) {
+            $sql_insert_p = "INSERT INTO product_photos (
+                path,
+                product_id,
+                created_at,
+                updated_at
+            ) VALUES (?, ?, ?, ?)";
+
+            $dados_p = array(
+                $p['path'],
+                $insert_produtos,
+                $p['created_at'],
+                $p['updated_at']
+            );
+            $add_p = $this->db->insert($sql_insert_p, $dados_p);
+        }
+
 
         $sql_insert_product_values = "INSERT INTO product_values (
             quantity,
             price,
             product_id,
-        );
-        VALUES (?, ?, ?)";
+            created_at
+        )
+        VALUES (?, ?, ?, ?)";
 
         $dados_product_values = array(
             $quantity,
             '100',
-            $insert_produtos,
+            (int)$insert_produtos,
+            date('Y-m-d H:i:s')
         );
 
-        $this->db->insert($sql_insert_product_values, $dados_product_values);
 
+        $add_valor = $this->db->insert($sql_insert_product_values, $dados_product_values);
 
 
         $query = "INSERT INTO budget_product (
